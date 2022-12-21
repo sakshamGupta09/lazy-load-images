@@ -79,3 +79,7 @@
 .items-center {
   align-items: center;
 }
+
+.block {
+  display: block;
+}

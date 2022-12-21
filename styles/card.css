@@ -20,5 +20,4 @@
 .card__img {
   height: 15rem;
   object-fit: cover;
-  object-position: top center;
 }

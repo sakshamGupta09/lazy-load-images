@@ -4,6 +4,8 @@ import debounceTime from "../utils/debounce.js";
 
 let photos = [];
 
+const imageIntersectionObserver = observeIntersection();
+
 // Constants
 
 const CONSTANTS = {
@@ -18,6 +20,7 @@ const CONSTANTS = {
     per_page: 30,
     page: 1,
   },
+  placeholderImageUrl: "/assets/placeholder-image.png",
 };
 
 // Dom Elements
@@ -71,6 +74,7 @@ function renderUI() {
   photos.forEach((photo) => {
     const cardNode = getCardNodeHTML(photo);
     cardsSectionElement.appendChild(cardNode);
+    imageIntersectionObserver.observe(cardNode.querySelector(".img-lazy"));
   });
 }
 
@@ -83,9 +87,10 @@ function getCardNodeHTML(photo) {
   const imageElement = document.createElement("img");
   setAttributesOfDomNode(imageElement, {
     width: "100%",
-    class: "card__img",
-    src: photo.urls?.regular,
+    class: "card__img img-lazy",
+    src: CONSTANTS.placeholderImageUrl,
     alt: photo.description || photo.alt_description,
+    "data-src": photo.urls?.regular,
   });
 
   // Card body
@@ -137,6 +142,30 @@ function setTheme(isDarkMode) {
 
 function onThemeChange(e) {
   setTheme(e.target.checked);
+}
+
+function observeIntersection() {
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 1,
+  };
+  const intersectionObserver = new IntersectionObserver(
+    debounceTime(intersetionCallback, 500),
+    options
+  );
+  return intersectionObserver;
+}
+
+function intersetionCallback(entries, observer) {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const target = entry.target;
+      target.src = target.dataset.src;
+      target.classList.remove("img-lazy");
+      imageIntersectionObserver.unobserve(target);
+    }
+  });
 }
 
 // On load
