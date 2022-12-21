@@ -1,5 +1,3 @@
-import debounceTime from "../utils/debounce.js";
-
 // State
 
 let photos = [];
@@ -151,7 +149,7 @@ function observeIntersection() {
     threshold: 1,
   };
   const intersectionObserver = new IntersectionObserver(
-    debounceTime(intersetionCallback, 500),
+    intersetionCallback,
     options
   );
   return intersectionObserver;
