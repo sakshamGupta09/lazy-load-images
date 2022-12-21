@@ -4,7 +4,7 @@
 
 # Project description
 
-This is a vanilla JS project which uses [Unsplash API](https://unsplash.com/documentation) to fetch the most popular images and render the results onto the UI. It supports lazy loading of images using Intersection Observer API. The layout is completely responsive and supports dark theme as well.
+This is a vanilla JS project which uses [Unsplash API](https://unsplash.com/documentation) to fetch the most popular images and render the results onto the UI. It supports lazy loading of images using Intersection Observer API. The layout is completely responsive and supports dark theme as well. All images will have a default placeholder image which is very small in size and actual image will be loaded only once it is in viewport.
 
 # Key Features
 
